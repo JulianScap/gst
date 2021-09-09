@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h2>GST calculator</h2>
+      <div class="form-group">
+        <label for="gstRate">GST rate:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="gstRate"
+          value="15"
+          onkeyup="updateFromGstRate();"
+        />
+      </div>
+      <div class="form-group">
+        <label for="inclusive">Price including GST:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="inclusive"
+          value="115"
+          onkeyup="updateFromInclusive();"
+        />
+      </div>
+      <div class="form-group">
+        <label for="gst">GST:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="gst"
+          value="15"
+          onkeyup="updateFromGst();"
+        />
+      </div>
+      <div class="form-group">
+        <label for="pwd">Price excluding GST:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="excluding"
+          value="100"
+          onkeyup="updateFromExcluding();"
+        />
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      const gstRate = document.getElementById("gstRate");
+      const inclusive = document.getElementById("inclusive");
+      const gst = document.getElementById("gst");
+      const excluding = document.getElementById("excluding");
+
+      function round(value) {
+        return Math.round(value * 100) / 100;
+      }
+
+      function updateFromGstRate() {
+        gst.value = round((+excluding.value * +gstRate.value) / 100);
+        inclusive.value = round(+gst.value + +excluding.value);
+      }
+
+      function updateFromInclusive() {
+        excluding.value = round(+inclusive.value / (+gstRate.value / 100 + 1));
+        gst.value = round(+inclusive.value - +excluding.value);
+      }
+
+      function updateFromGst() {}
+
+      function updateFromExcluding() {
+        gst.value = round((+excluding.value * +gstRate.value) / 100);
+        inclusive.value = round(+gst.value + +excluding.value);
+      }
+    </script>
+  </body>
+</html>
